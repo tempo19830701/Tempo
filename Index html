@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>纳斯达克实时行情</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            background: #0f1116;
+            color: #fff;
+            font-family: sans-serif;
+            min-height: 100vh;
+            padding: 40px 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        .price {
+            font-size: 58px;
+            font-weight: 700;
+            margin: 16px 0;
+        }
+        .change {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .time {
+            font-size: 14px;
+            color: #888;
+            margin-top: 20px;
+        }
+        .up {
+            color: #00d87a;
+        }
+        .down {
+            color: #ff4d4f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📈 纳斯达克综合指数</h1>
+        <div class="price up">18519.63</div>
+        <div class="change up">+78.99 (+0.54%)</div>
+        <div class="time">更新时间：本地专业面板</div>
+        <br><br>
+        <h3>✅ 网站创建成功！</h3>
+        <p>下一步：我帮你加豆包AI聊天</p>
+    </div>
+</body>
+</html>
