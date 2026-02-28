@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI 图片搜寻 - 可爱版</title>
+<title>AI 图片识别搜寻</title>
 <style>
   * {
     margin: 0;
@@ -12,102 +12,101 @@
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   }
 
+  /* ✅ 最外层背景：渐变粉蓝纯色（和你截图一致） */
   body {
+    background: linear-gradient(180deg, #ffeff4 0%, #b3e5ff 100%);
+    min-height: 100vh;
     padding: 20px;
-    max-width: 500px;
-    margin: 0 auto;
-
-    /* 粉嫩底色 + 草莓樱桃背景图案 */
-    background: #ffe6f0;
-    background-image: url('https://cdn-icons-png.flaticon.com/128/3175/3175332.png'), 
-                      url('https://cdn-icons-png.flaticon.com/128/3175/3175324.png');
-    background-size: 80px, 60px;
-    background-position: left 20px top 30px, right 40px bottom 50px;
-    background-repeat: repeat, repeat;
-    background-attachment: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
   }
 
+  /* ✅ 中间白色框：无任何图案，纯白干净 */
   .container {
-    background: white;
+    background: #ffffff;
+    width: 100%;
+    max-width: 500px;
     padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
-    border: 1px solid #ffc0d0;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
   }
 
+  /* ✅ 标题：保留草莓+樱桃emoji，蓝色文字 */
   h2 {
     text-align: center;
     margin-bottom: 20px;
-    color: #ff5c8a;
+    color: #0099ff;
+    font-size: 28px;
   }
 
+  /* ✅ 上传框：虚线蓝边，和截图一致 */
   .upload-box {
-    border: 2px dashed #ff99bb;
-    border-radius: 16px;
+    border: 2px dashed #66b3ff;
+    border-radius: 12px;
     padding: 30px 15px;
     text-align: center;
     cursor: pointer;
-    transition: all 0.3s;
-    margin-bottom: 15px;
-    background: #fffafc;
+    margin-bottom: 20px;
+    background: #f8fcff;
   }
 
-  .upload-box:hover {
-    border-color: #ff5c8a;
-    background: #fff0f6;
+  .upload-box p {
+    font-size: 18px;
+    color: #333;
   }
 
   #preview {
     max-width: 100%;
-    max-height: 260px;
-    border-radius: 12px;
-    margin-top: 10px;
+    max-height: 220px;
+    border-radius: 10px;
+    margin-top: 12px;
     display: none;
   }
 
+  /* ✅ AI按钮：纯浅蓝底色，白色文字 */
   .btn {
     width: 100%;
-    padding: 14px;
-    border-radius: 14px;
+    padding: 16px;
     border: none;
-    background: #ff5c8a;
+    border-radius: 12px;
+    background: #66b3ff;
     color: white;
-    font-size: 16px;
-    font-weight: bold;
+    font-size: 18px;
+    font-weight: 500;
     cursor: pointer;
-    margin: 8px 0;
   }
 
   .btn:disabled {
-    background: #ffb0c8;
-  }
-
-  .result-box {
-    margin-top: 20px;
-    padding: 15px;
-    background: #fffafc;
-    border-radius: 12px;
-    display: none;
-    border: 1px solid #ffd6e7;
-  }
-
-  .result-box h4 {
-    margin-bottom: 8px;
-    color: #ff5c8a;
-  }
-
-  .result-box p {
-    color: #666;
-    font-size: 14px;
-    line-height: 1.5;
+    background: #b3d9ff;
+    cursor: not-allowed;
   }
 
   #fileInput {
     display: none;
   }
+
+  .result-box {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f8fcff;
+    border-radius: 12px;
+    display: none;
+    border: 1px solid #cce7ff;
+  }
+
+  .result-box h4 {
+    margin-bottom: 8px;
+    color: #0099ff;
+  }
+
+  .result-box p {
+    color: #555;
+    font-size: 14px;
+    line-height: 1.5;
+  }
 </style>
 </head>
-
 <body>
 
 <div class="container">
@@ -149,7 +148,7 @@
     this.disabled = true;
 
     setTimeout(() => {
-      resultText.textContent = '圖片分析完成！可以辨認物品、場景、文字同相關資料。';
+      resultText.textContent = '圖片分析完成！';
       resultBox.style.display = 'block';
       this.textContent = '開始 AI 識別搜圖';
       this.disabled = false;
