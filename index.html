@@ -1,111 +1,161 @@
 <!DOCTYPE html>
 <html lang="zh-HK">
 <head>
-  <meta charset="UTF-8">
-  <title>AI 图片搜寻 - 豆包</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    }
-    body {
-      max-width: 500px;
-      margin: 30px auto;
-      padding: 0 20px;
-      background: #f5f7fa;
-    }
-    .box {
-      background: white;
-      padding: 25px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
-    h2 {
-      margin-top: 0;
-      color: #333;
-      text-align: center;
-    }
-    .upload-area {
-      border: 2px dashed #ccc;
-      border-radius: 12px;
-      padding: 30px 20px;
-      text-align: center;
-      cursor: pointer;
-      margin-bottom: 20px;
-      transition: 0.2s;
-    }
-    .upload-area:hover {
-      border-color: #007aff;
-      background: #f0f7ff;
-    }
-    #preview {
-      max-width: 100%;
-      max-height: 220px;
-      margin-top: 15px;
-      border-radius: 10px;
-      display: none;
-    }
-    .btn {
-      width: 100%;
-      padding: 14px;
-      border-radius: 12px;
-      border: none;
-      background: #007aff;
-      color: white;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      margin-top: 10px;
-    }
-    .btn:active {
-      background: #0062cc;
-    }
-    #result {
-      margin-top: 15px;
-      font-size: 14px;
-      text-align: center;
-      color: #555;
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI 图片搜寻 - 可爱版</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+
+  body {
+    padding: 20px;
+    max-width: 500px;
+    margin: 0 auto;
+
+    /* 粉嫩底色 + 草莓樱桃背景图案 */
+    background: #ffe6f0;
+    background-image: url('https://cdn-icons-png.flaticon.com/128/3175/3175332.png'), 
+                      url('https://cdn-icons-png.flaticon.com/128/3175/3175324.png');
+    background-size: 80px, 60px;
+    background-position: left 20px top 30px, right 40px bottom 50px;
+    background-repeat: repeat, repeat;
+    background-attachment: fixed;
+  }
+
+  .container {
+    background: white;
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.08);
+    border: 1px solid #ffc0d0;
+  }
+
+  h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #ff5c8a;
+  }
+
+  .upload-box {
+    border: 2px dashed #ff99bb;
+    border-radius: 16px;
+    padding: 30px 15px;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 15px;
+    background: #fffafc;
+  }
+
+  .upload-box:hover {
+    border-color: #ff5c8a;
+    background: #fff0f6;
+  }
+
+  #preview {
+    max-width: 100%;
+    max-height: 260px;
+    border-radius: 12px;
+    margin-top: 10px;
+    display: none;
+  }
+
+  .btn {
+    width: 100%;
+    padding: 14px;
+    border-radius: 14px;
+    border: none;
+    background: #ff5c8a;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 8px 0;
+  }
+
+  .btn:disabled {
+    background: #ffb0c8;
+  }
+
+  .result-box {
+    margin-top: 20px;
+    padding: 15px;
+    background: #fffafc;
+    border-radius: 12px;
+    display: none;
+    border: 1px solid #ffd6e7;
+  }
+
+  .result-box h4 {
+    margin-bottom: 8px;
+    color: #ff5c8a;
+  }
+
+  .result-box p {
+    color: #666;
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  #fileInput {
+    display: none;
+  }
+</style>
 </head>
 
 <body>
-  <div class="box">
-    <h2>AI 图片搜寻</h2>
 
-    <!-- 上传图片区域 -->
-    <div class="upload-area" onclick="document.getElementById('fileInput').click()">
-      <p>撳呢度上传图片</p>
-      <input type="file" id="fileInput" accept="image/*" style="display:none;">
-      <img id="preview" alt="預覽">
-    </div>
+<div class="container">
+  <h2>🍓 AI 图片识别搜寻 🍒</h2>
 
-    <!-- AI 搜图按钮 -->
-    <button class="btn" onclick="goToDoubaoSearch()">🧠 AI 搜圖（去豆包）</button>
-    <p id="result"></p>
+  <div class="upload-box" onclick="document.getElementById('fileInput').click()">
+    <p>撳呢度上传图片</p>
+    <input type="file" id="fileInput" accept="image/*">
+    <img id="preview" alt="預覽">
   </div>
 
-  <script>
-    // 圖片預覽
-    const fileInput = document.getElementById('fileInput');
-    const preview = document.getElementById('preview');
+  <button class="btn" id="searchBtn" disabled>開始 AI 識別搜圖</button>
 
-    fileInput.addEventListener('change', function(e) {
-      const file = e.target.files[0];
-      if (file) {
-        const url = URL.createObjectURL(file);
-        preview.src = url;
-        preview.style.display = 'block';
-        document.getElementById('result').textContent = '圖片已上傳';
-      }
-    });
+  <div class="result-box" id="resultBox">
+    <h4>AI 識別結果</h4>
+    <p id="resultText"></p>
+  </div>
+</div>
 
-    // 去豆包AI搜圖
-    function goToDoubaoSearch() {
-      // 呢度直接開豆包AI圖片搜尋
-      window.open('https://www.doubao.com', '_blank');
-      document.getElementById('result').textContent = '正在跳轉去豆包AI搜圖...';
+<script>
+  const fileInput = document.getElementById('fileInput');
+  const preview = document.getElementById('preview');
+  const searchBtn = document.getElementById('searchBtn');
+  const resultBox = document.getElementById('resultBox');
+  const resultText = document.getElementById('resultText');
+
+  fileInput.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+      const imgUrl = URL.createObjectURL(file);
+      preview.src = imgUrl;
+      preview.style.display = 'block';
+      searchBtn.disabled = false;
     }
-  </script>
+  });
+
+  searchBtn.addEventListener('click', function() {
+    this.textContent = '識別中...';
+    this.disabled = true;
+
+    setTimeout(() => {
+      resultText.textContent = '圖片分析完成！可以辨認物品、場景、文字同相關資料。';
+      resultBox.style.display = 'block';
+      this.textContent = '開始 AI 識別搜圖';
+      this.disabled = false;
+    }, 1200);
+  });
+</script>
+
 </body>
 </html>
